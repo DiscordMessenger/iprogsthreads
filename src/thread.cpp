@@ -1,3 +1,9 @@
+//
+//  iProgramInCpp's Thread Implementation for Windows
+//
+//  Copyright (C) 2024 iProgramInCpp.  Licensed under the MIT license.
+//
+
 #include <iprog/thread.hpp>
 
 #define WIN32_LEAN_AND_MEAN

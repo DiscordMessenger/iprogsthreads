@@ -1,3 +1,9 @@
+//
+//  iProgramInCpp's Thread Implementation for Windows
+//
+//  Copyright (C) 2024 iProgramInCpp.  Licensed under the MIT license.
+//
+
 #ifndef _IPROG_MUTEX_
 #define _IPROG_MUTEX_
 

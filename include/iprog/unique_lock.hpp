@@ -1,3 +1,9 @@
+//
+//  iProgramInCpp's Thread Implementation for Windows
+//
+//  Copyright (C) 2024 iProgramInCpp.  Licensed under the MIT license.
+//
+
 #ifndef _IPROG_UNIQUE_LOCK_
 #define _IPROG_UNIQUE_LOCK_
 
