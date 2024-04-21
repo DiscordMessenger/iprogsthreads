@@ -1,0 +1,71 @@
+#include <iprog/thread.hpp>
+
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
+namespace iprog {
+
+thread::native_handle_type thread::create_thread(void* invokeptr, void* params, size_t& out_id) noexcept
+{
+	// Create the actual thread.
+	DWORD threadId = 0;
+	HANDLE hnd = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)invokeptr, params, 0, &threadId);
+
+	// Assign the output thread ID.
+	if (!hnd) threadId = 0;
+	out_id = (size_t) threadId;
+
+	// Return the handle to the thread.
+	return (native_handle_type) hnd;
+}
+
+void thread::join()
+{
+	if (!joinable()) {
+		DbgPrintW("invalid_argument In thread::join");
+		throw std::system_error(std::make_error_code(std::errc::invalid_argument));
+	}
+
+	// TODO: check against this thread
+
+	// Wait for the thread to exit.
+	WaitForSingleObject(m_handle, INFINITE);
+
+	// The thread has now exited.  Reset its properties.
+	CloseHandle(m_handle);
+	m_handle = 0;
+	m_id = id();
+}
+
+void thread::detach()
+{
+	if (!joinable()) {
+		DbgPrintW("invalid_argument In thread::detach");
+		throw std::system_error(std::make_error_code(std::errc::invalid_argument));
+	}
+
+	// TODO: check against this thread
+
+	// Close the handle to the thread.  It will keep running.
+	CloseHandle(m_handle);
+	m_handle = 0;
+	m_id = id();
+}
+
+unsigned int thread::hardware_concurrency() noexcept
+{
+	// TODO
+	return 4;
+}
+
+thread::id this_thread::get_id() noexcept
+{
+	return thread::id(GetCurrentThreadId());
+}
+
+void this_thread::perform_sleep(uint32_t ms) noexcept
+{
+	Sleep((DWORD) ms);
+}
+
+} // namespace iprog
