@@ -64,6 +64,7 @@ public:
 		m_owns  = oth.m_owns;
 		oth.m_mutex = nullptr;
 		oth.m_owns  = false;
+		return (*this);
 	}
 
 	void lock() {

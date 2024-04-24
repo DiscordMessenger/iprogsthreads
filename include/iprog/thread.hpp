@@ -125,6 +125,7 @@ public:
 		m_id = other.m_id;
 		other.m_handle = nullptr;
 		other.m_id = id(0);
+		return (*this);
 	}
 
 	// Creates a new std::thread object and associates it with a thread of execution.
