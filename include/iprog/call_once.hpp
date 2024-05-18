@@ -38,8 +38,8 @@ void call_once(once_flag& once, Callable&& f, Args&&... args) {
 	if (once.m_run.load(std::memory_order_relaxed))
 		return;
 
-	std::bind(std::forward<Callable>(f), std::forward<Args>(args)...);
 	once.m_run.store(true, std::memory_order_release);
+	std::bind(std::forward<Callable>(f), std::forward<Args>(args)...)();
 }
 
 };
