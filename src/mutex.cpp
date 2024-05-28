@@ -8,13 +8,7 @@
 #include <iprog/mutex.hpp>
 
 #define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-
-#ifdef _DEBUG
-void DbgPrintW(const char* fmt, ...);
-#else
-#define DbgPrintW(...)
-#endif
+#include <windows.h>
 
 namespace iprog {
 
@@ -67,7 +61,9 @@ void mutex::lock()
 	// thread attempts to lock a mutex again.
 	if (m_owned) {
 		m_driver.unlock();
-		DbgPrintW("resource_deadlock_would_occur In mutex::lock");
+#ifdef _DEBUG
+		OutputDebugStringA("iprogsthread warning: resource_deadlock_would_occur in mutex::lock\n");
+#endif
 		throw std::system_error(std::make_error_code(std::errc::resource_deadlock_would_occur));
 		return;
 	}
