@@ -15,6 +15,7 @@
 #include <chrono>
 #include <system_error>
 
+#include "override_terminate.hpp"
 #include "w32constants.hpp"
 
 #ifdef _DEBUG
@@ -104,7 +105,7 @@ public:
 	// Destroys the thread object.  It may not have an associated thread.
 	~thread() noexcept {
 		if (joinable())
-			std::terminate();
+			terminateIprogsThreads();
 	}
 
 	// Constructs the std::thread object to represent the thread of execution that
@@ -119,7 +120,7 @@ public:
 
 	thread& operator=(thread&& other) noexcept {
 		if (joinable())
-			std::terminate();
+			terminateIprogsThreads();
 
 		m_handle = other.m_handle;
 		m_id = other.m_id;

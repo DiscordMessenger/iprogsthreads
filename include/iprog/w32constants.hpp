@@ -7,6 +7,8 @@
 #ifndef _IPROG_W32CONSTANTS_
 #define _IPROG_W32CONSTANTS_
 
+#include "override_terminate.hpp"
+
 namespace iprog {
 
 // NOTE: I hate having to do this, and I know I shouldn't, but I doubt

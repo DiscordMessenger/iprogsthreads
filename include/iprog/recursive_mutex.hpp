@@ -7,6 +7,8 @@
 #ifndef _IPROG_RECURSIVE_MUTEX_
 #define _IPROG_RECURSIVE_MUTEX_
 
+#include "override_terminate.hpp"
+
 namespace iprog {
 
 class recursive_mutex

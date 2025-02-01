@@ -60,10 +60,10 @@ public:
 		while (m_num_waiters > 0) {
 			auto ret = wait_object(m_wake_event, 1000);
 			if (ret == __wait_failed || ret == __wait_abandoned)
-				std::terminate();
+				terminateIprogsThreads();
 		}
 		if (m_num_waiters != 0)
-			std::terminate();
+			terminateIprogsThreads();
 
 		// In case some of the waiters timed out just after we released the
 		// semaphore by m_num_waiters, it won't be zero now, because not all
@@ -150,11 +150,11 @@ private:
 		while (m_num_waiters > target_waiters) {
 			auto ret = wait_object(m_wake_event, 1000);
 			if (ret == __wait_failed || ret == __wait_abandoned)
-				std::terminate();
+				terminateIprogsThreads();
 		}
 
 		if (m_num_waiters != target_waiters)
-			std::terminate();
+			terminateIprogsThreads();
 	}
 
 	uint32_t wait_object(native_handle sem, uint32_t timeout);

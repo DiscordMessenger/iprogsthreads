@@ -11,6 +11,7 @@
 #include <system_error>
 
 #include "lock_tags.hpp"
+#include "override_terminate.hpp"
 
 namespace iprog {
 

@@ -9,6 +9,7 @@
 
 #include <atomic>
 
+#include "override_terminate.hpp"
 #include "mutex.hpp"
 #include "lock_guard.hpp"
 

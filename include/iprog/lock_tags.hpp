@@ -7,6 +7,8 @@
 #ifndef _IPROG_LOCK_TAGS_
 #define _IPROG_LOCK_TAGS_
 
+#include "override_terminate.hpp"
+
 namespace iprog {
 
 struct adopt_lock_t  { explicit adopt_lock_t()  = default; };
