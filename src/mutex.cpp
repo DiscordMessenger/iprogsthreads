@@ -10,6 +10,13 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#ifdef  USE_IPROGS_REIMPL
+#	include <ri/reimpl.hpp>
+#	define _TryEnterCriticalSection ri::TryEnterCriticalSection
+#else
+#	define _TryEnterCriticalSection TryEnterCriticalSection
+#endif
+
 namespace iprog {
 
 recursive_mutex::recursive_mutex() noexcept
@@ -35,7 +42,7 @@ void recursive_mutex::lock()
 bool recursive_mutex::try_lock()
 {
 	LPCRITICAL_SECTION crit = (LPCRITICAL_SECTION) m_handle;
-	return TryEnterCriticalSection(crit) == TRUE;
+	return _TryEnterCriticalSection(crit) != FALSE;
 }
 
 void recursive_mutex::unlock()
