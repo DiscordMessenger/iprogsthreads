@@ -9,13 +9,19 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#ifdef  USE_IPROGS_REIMPL
+#	include <ri/reimpl.hpp>
+#else
+#	include <process.h>
+#endif
+
 namespace iprog {
 
 thread::native_handle_type thread::create_thread(void* invokeptr, void* params, size_t& out_id) noexcept
 {
 	// Create the actual thread.
-	DWORD threadId = 0;
-	HANDLE hnd = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)invokeptr, params, 0, &threadId);
+	unsigned threadId = 0;
+	HANDLE hnd = (HANDLE) _beginthreadex(NULL, 0, (_beginthreadex_proc_type)invokeptr, params, 0, &threadId);
 
 	// Assign the output thread ID.
 	if (!hnd) threadId = 0;
@@ -28,7 +34,7 @@ thread::native_handle_type thread::create_thread(void* invokeptr, void* params, 
 void thread::join()
 {
 	if (!joinable()) {
-		DbgPrintW("invalid_argument In thread::join");
+		DbgPrintW("invalid_argument in thread::join");
 		throw std::system_error(std::make_error_code(std::errc::invalid_argument));
 	}
 
@@ -46,7 +52,7 @@ void thread::join()
 void thread::detach()
 {
 	if (!joinable()) {
-		DbgPrintW("invalid_argument In thread::detach");
+		DbgPrintW("invalid_argument in thread::detach");
 		throw std::system_error(std::make_error_code(std::errc::invalid_argument));
 	}
 
